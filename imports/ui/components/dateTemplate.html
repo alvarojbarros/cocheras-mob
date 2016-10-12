@@ -1,0 +1,17 @@
+<template name="dateTemplate">
+  <div class="list-item">
+    {{#if userAdmin}}
+      <b>{{this}}</b>
+      <b><a href="#" class="js-show-date" title="Date" > Disponibles: {{getDisponibilidad}} </a></b>
+    {{else}}
+      {{#if isHolder}}
+        <b>{{this}}</b>
+        <button class="toggle-free"> Desocupar </button>
+        <b>{{getDisponibilidadHold}}</b>
+      {{else}}
+        <b>{{this}}</b>
+        <b><a href="#" class="js-show-date" title="Date" > Disponibles: {{getDisponibilidad}} </a></b>
+      {{/if}}
+    {{/if}}
+  </div>
+</template>

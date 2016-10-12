@@ -1,0 +1,26 @@
+<template name="cochera">
+  <div class="list-item">
+
+    <span class="text-cochera">
+      <b>{{text}}</b>
+    </span>
+    <!--span class="text-cochera">Propietario</span-->
+
+    <select class="set-owner combo-option" id="setOwner" >
+      {{#each userList}}
+        <option value={{username}} {{selectedOwner ownerName}}> {{username}}</option>
+      {{/each}}
+      <option value="" {{selectedOwner ownerName}}> - </option>
+    </select>
+    <!--span class="text-cochera">Disponible</span-->
+    <select class="set-available combo-option" id="setAvailable" >
+      <option value="false" {{selectedAvailable false}}> Siempre </option>
+      <option value="true" {{selectedAvailable true}}> Nunca </option>
+    </select>
+
+    <a class="js-delete-item delete-item" href="#">
+      <span class="icon-trash"></span>
+    </a>
+
+  </div>
+</template>

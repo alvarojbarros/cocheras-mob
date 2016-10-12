@@ -1,0 +1,12 @@
+<template name="cocheraAdmin">
+  <li>
+	<span class="text"><b>{{cocheraName}}</b></span>
+	<span class="text">Ocupante</span>
+	<select class="set-holder" id="setHolder" >
+	  {{#each userList}}
+		  <option value={{username}} {{selectedHolder holderName}}> {{username}}</option>
+	  {{/each}}
+	  <option value="" {{selectedHolder holderName}}> - </option>
+	</select>
+  </li>
+</template>

@@ -1,0 +1,27 @@
+<template name="disponibilidadList">
+  <div class="page disp-show">
+    <nav class="js-title-nav">
+      {{#momentum plugin="fade"}}
+        <div class="nav-group">
+          <a href="#" class="js-menu nav-item">
+            <span class="icon-list-unordered" title={{_ 'lists.show.showMenu'}}></span>
+          </a>
+        </div>
+        <h1 class="title-page">
+          <span class="title-wrapper">Disponibilidad</span>
+        </h1>
+
+      {{/momentum}}
+
+    </nav>
+    <div class="content-scrollable list-items">
+      <ul>
+        {{#each dateList}}
+        <li>
+          {{ > dateTemplate}}
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>

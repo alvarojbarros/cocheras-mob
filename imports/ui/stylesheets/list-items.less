@@ -1,0 +1,76 @@
+@import './utils.less';
+
+.list-items .list-item {
+  .font-s2;
+
+  // Layout of list-item children
+  display: flex;
+  flex-wrap: wrap;
+  height: 2rem;
+  width: 100%;
+  border-top: 1px solid #f0f9fb;
+
+  .checkbox {
+    flex: 0, 0, 44px;
+    cursor: pointer;
+  }
+  input[type="text"] { flex: 1; }
+
+
+  // Style of list-item children
+  input[type="text"] {
+    background: transparent;
+    cursor: pointer;
+
+    &:focus { cursor: text; }
+  }
+
+  a.js-show-user {
+    background: transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    padding: 1em 0 1em 0;
+    &:focus { cursor: text; }
+  }
+  
+  a.js-show-cochera {
+    background: transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    padding: 1em 0 1em 0;
+    &:focus { cursor: text; }
+  }
+
+  span.text-cochera {
+    background: transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    width: 25%;
+    &:focus { cursor: text; }
+  }
+
+  select.combo-option {
+    background: transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    width: 25%;
+  }
+	
+  .delete-item {
+    color: @color-medium-rare;
+    line-height: 3rem;
+    text-align: center;
+    padding: 0em 0em 0em 2em;
+    vertical-align: middle;
+
+    &:hover { color: @color-primary; }
+    &:active { color: @color-well; }
+    .icon-trash { font-size: 1.1em; }
+  }
+
+
+  // Border between user items
+  & + .list-item { border-top: 1px solid #f0f9fb; }
+
+}
