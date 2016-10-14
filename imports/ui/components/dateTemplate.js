@@ -8,6 +8,8 @@ import './dateTemplate.html';
 
 import {
   setFree,
+  hold,
+  setStatus,
 } from '../../api/disponibilidad/methods.js';
 
 
@@ -24,9 +26,15 @@ Template.dateTemplate.events({
   },
 
   'click .toggle-free'(event,template) {
-    //Meteor.call('disponibilidad.set-free', disponibilidadId(this.valueOf()));
     setFree.call({ Id: disponibilidadId(this.valueOf())});
   },
+
+  'click .toggle-hold'() {
+    //hold.call({Id: disponibilidadId(this.valueOf()), holderId: this.holder, dS: 2});
+    setStatus.call({Id: disponibilidadId(this.valueOf()), dS: 2});
+    //FlowRouter.go('Disponibilidad.show');
+  },
+
 
 });
 
@@ -50,6 +58,7 @@ Template.dateTemplate.helpers({
   },
 
   userAdmin(){
+	//console.log("dateTemplate");
 	return (Meteor.user().emails[0].address=="admin@mail.com" || Meteor.user().emails[0].address=="super@mail.com");
   },
 
@@ -65,7 +74,21 @@ Template.dateTemplate.helpers({
 
   getDisponibilidadHold(){
 	Meteor.subscribe('disponibilidad.List');
-	return Disponibilidad.find({holder: Meteor.userId(),transdate: this.valueOf()}).fetch()[0].cocheraName;
+	disp = Disponibilidad.findOne({holder: Meteor.userId(),transdate: this.valueOf()});
+	if (disp.dStatus==1){
+		return disp.cocheraName + "(Resevada)";
+	}else{
+		return disp.cocheraName;
+	}
+  },
+
+  isReserved(){
+	Meteor.subscribe('disponibilidad.List');
+	disp = Disponibilidad.findOne({holder: Meteor.userId(),transdate: this.valueOf()});
+	if (disp.dStatus==1){
+		return true;
+	}
+	return false;
   },
 
 

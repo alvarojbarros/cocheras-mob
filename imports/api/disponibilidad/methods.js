@@ -45,8 +45,9 @@ export const hold = new ValidatedMethod({
   validate: new SimpleSchema({
     Id: Disponibilidad.simpleSchema().schema('_id'),
     holderId: Disponibilidad.simpleSchema().schema('holder'),
+    dS: Disponibilidad.simpleSchema().schema('dStatus'),
   }).validator({ clean: true, filter: false }),
-  run({ Id,holderId}) {
+  run({ Id,holderId,dS}) {
 
 	if (holderId){
 	    Disponibilidad.update(Id, {
@@ -57,11 +58,9 @@ export const hold = new ValidatedMethod({
 	    });
 	}else{
 
-		dip = Disponibilidad.findOne(Id);
-		ds = getStatus(dip.transdate);
 	    Disponibilidad.update(Id, {
 	      $set: {
-			  dStatus: ds,
+			  dStatus: dS,
 			  holder: Meteor.userId(),
 			  holderName: Meteor.user().emails[0].address },
 	    });
@@ -185,6 +184,7 @@ if (Meteor.isServer) {
     connectionId() { return true; },
   }, 5, 1000);
 
+  Disponibilidad._ensureIndex({ cochera: 1, transdate: 1 }, { unique: true })
 
 }
 

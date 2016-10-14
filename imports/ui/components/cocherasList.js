@@ -21,6 +21,7 @@ Template.cocherasList.helpers({
   },
 
   userAdmin(){
+	//console.log("cocheraList");
 	return (Meteor.user().emails[0].address=="admin@mail.com" || Meteor.user().emails[0].address=="super@mail.com");
   },
   superUser(){

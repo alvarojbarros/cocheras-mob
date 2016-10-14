@@ -52,8 +52,9 @@ FlowRouter.route('/', {
               	FlowRouter.go('Disponibilidad.show');
             }
         });
-      }
+    },
 });
+
 
 // the App_notFound template is used for unknown routes and missing lists
 FlowRouter.notFound = {

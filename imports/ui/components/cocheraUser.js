@@ -14,13 +14,13 @@ import {
 Template.cocheraUser.events({
   'click .toggle-hold'() {
     //Meteor.call('disponibilidad.hold', this._id, this.holder);
-    hold.call({Id: this._id, holderId: this.holder});
+    hold.call({Id: this._id, holderId: this.holder, dS: 2});
     FlowRouter.go('Disponibilidad.show');
   },
 
   'click .toggle-reserve'() {
     //Meteor.call('disponibilidad.hold', this._id, this.holder);
-    hold.call({Id: this._id, holderId: this.holder});
+    hold.call({Id: this._id, holderId: this.holder, dS: 1});
     FlowRouter.go('Disponibilidad.show');
   },
 
