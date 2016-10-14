@@ -16,13 +16,19 @@
 
     </nav>
     <div class="content-scrollable list-items">
-      {{#each getCocheras}}
-        {{#if userAdmin}}
-          {{> cocheraAdmin}}
-        {{else}}
-          {{> cocheraUser}}
-        {{/if}}
-      {{/each}}
+      <ul>
+        {{#each getCocheras}}
+          <div class="list-item">
+          <li>
+            {{#if userAdmin}}
+              {{> cocheraAdmin}}
+            {{else}}
+              {{> cocheraUser}}
+            {{/if}}
+          </li>
+          </div>
+        {{/each}}
+      </ul>
     </div>
   </div>
 </template>

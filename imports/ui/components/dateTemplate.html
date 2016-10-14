@@ -1,8 +1,9 @@
 <template name="dateTemplate">
   <div class="list-item">
     {{#if userAdmin}}
-      <b>{{this}}</b>
-      <b><a href="#" class="js-show-date" title="Date" > Disponibles: {{getDisponibilidad}} </a></b>
+      <span class="date-text"><b>{{this}}</b></span>
+      <b><a href="#" class="js-show-date" title="Date" > Disponibles:</a></b>
+      <span class="count-list">{{getDisponibilidad}} </span>
     {{else}}
       {{#if isHolder}}
         <b>{{this}}</b>
@@ -10,7 +11,8 @@
         <b>{{getDisponibilidadHold}}</b>
       {{else}}
         <b>{{this}}</b>
-        <b><a href="#" class="js-show-date" title="Date" > Disponibles: {{getDisponibilidad}} </a></b>
+        <b><a href="#" class="js-show-date" title="Date" > Disponibles:</a></b>
+        <span class="count-list">{{getDisponibilidad}} </span>
       {{/if}}
     {{/if}}
   </div>

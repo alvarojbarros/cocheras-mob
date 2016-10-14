@@ -1,5 +1,4 @@
 <template name="cocheraAdmin">
-  <li>
   <span class="text"><b>{{cocheraName}}</b></span>
   <span class="text">Ocupante</span>
   <select class="set-holder" id="setHolder" >
@@ -8,12 +7,9 @@
     {{/each}}
     <option value="" {{selectedHolder holderName}}> - </option>
   </select>
-  <select class="set-status combo-option" id="setStatus" >
+  <select class="set-status" id="setStatus" >
     <option value=0 {{selectedStatus 0}}> Libre </option>
     <option value=1 {{selectedStatus 1}}> Reservada </option>
     <option value=2 {{selectedStatus 2}}> Ocupada </option>
   </select>
-
-
-  </li>
 </template>
