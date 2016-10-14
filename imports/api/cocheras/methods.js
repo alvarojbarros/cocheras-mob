@@ -15,6 +15,7 @@ export const insert = new ValidatedMethod({
       owner: null,
       ownerName: null,
       notAvailable: null,
+      propType: 0,
     };
 
     Cocheras.insert(cochera);
@@ -36,6 +37,7 @@ export const setOwner = new ValidatedMethod({
 			Cocheras.update(cochera_actual[i]._id, { $set: {owner: null,ownerName: null}, });
 		};
 	}
+
 	Cocheras.update(cocheraId, { $set: { owner: userId, ownerName: userName }, });
   }
 });
@@ -80,6 +82,18 @@ export const setNotAvailable = new ValidatedMethod({
   },
 });
 
+export const setPropType = new ValidatedMethod({
+  name: 'cochera.setPropType',
+  validate: new SimpleSchema({
+    cocheraId: Cocheras.simpleSchema().schema('_id'),
+    pType: Cocheras.simpleSchema().schema('propType'),
+  }).validator({ clean: true, filter: false }),
+  run({ cocheraId,pType}) {
+    const cochera = Cocheras.findOne(cocheraId);
+    Cocheras.update(cocheraId, { $set: {propType: pType,} });
+  },
+});
+
 
 export const updateText = new ValidatedMethod({
   name: 'cochera.updateText',
@@ -111,6 +125,8 @@ export const remove = new ValidatedMethod({
     Cocheras.remove(cocheraId);
   },
 });
+
+
 
 // Get list of all method names on Cocheras
 const COCHERAS_METHODS = _.pluck([

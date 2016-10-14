@@ -18,6 +18,7 @@ import {
   setNotOwner,
   setNotAvailable,
   setAvailable,
+  setPropType,
 } from '../../api/cocheras/methods.js';
 
 
@@ -51,6 +52,12 @@ Template.cochera.events({
 	  }
   },
 
+  'change .set-propType': function (event, template) {
+	var propType = $(event.currentTarget).val();
+	setPropType.call({cocheraId: this._id,pType: propType}, displayError);
+  }
+
+
 });
 
 Template.cochera.helpers({
@@ -69,10 +76,14 @@ Template.cochera.helpers({
   },
 
   selectedOwner: function(key){
-      return this.username == this.ownerName ? 'selected' : '';
+     return this.username == this.ownerName ? 'selected' : '';
   },
   selectedAvailable: function(key){
-      return this.notAvailable ? 'selected' : '';
+     return this.notAvailable ? 'selected' : '';
   },
+  selectedPropType: function(key){
+     return this.propType == key ? 'selected' : '';
+  },
+
 
 });

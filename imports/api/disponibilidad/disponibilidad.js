@@ -57,6 +57,10 @@ Disponibilidad.schema = new SimpleSchema({
     type: String,
     max: 12,
   },
+  dStatus: {
+    type: Number,
+    optional: true,
+  },
 });
 
 Disponibilidad.attachSchema(Disponibilidad.schema);
@@ -77,5 +81,4 @@ Disponibilidad.helpers({
     return Disponibilidad.find({});
   },
 });
-
 

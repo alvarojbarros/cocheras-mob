@@ -1,8 +1,19 @@
 <template name="cocheraUser">
   <li>
-	{{#if isFree}}
-	  <button class="toggle-hold">Ocupar</button>
-	  <span class="text"><b>{{cocheraName}}</b></span>
-	{{/if}}
+  {{#if isFree}}
+    {{#if isToday}}
+      <button class="toggle-hold">Ocupar</button>
+
+      <select class="set-status combo-option" id="setStatus" >
+        <option value=0 {{selectedStatus 0}}> Libre </option>
+        <option value=1 {{selectedStatus 1}}> Reservada </option>
+        <option value=2 {{selectedStatus 2}}> Ocupada </option>
+      </select>
+
+    {{else}}
+      <button class="toggle-reserve">Reservar</button>
+    {{/if}}
+    <span class="text"><b>{{cocheraName}}</b></span>
+  {{/if}}
   </li>
 </template>

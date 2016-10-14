@@ -6,6 +6,17 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 
 import { Disponibilidad } from './disponibilidad.js';
 
+function getStatus(transdate){
+	var date = new Date();
+	datestr = moment(date).format("DD/MM/YYYY")
+	if (datestr==transdate){
+		ds = 2;
+	}else{
+		ds = 1;
+	};
+	return ds;
+};
+
 export const insert = new ValidatedMethod({
   name: 'disponibilidad.insert',
   validate: new SimpleSchema({
@@ -22,6 +33,7 @@ export const insert = new ValidatedMethod({
       holder: uId,
       holderName: uName,
       transdate: uDate,
+      dStatus: 0,
     };
 
     Disponibilidad.insert(disponibilidad);
@@ -39,12 +51,17 @@ export const hold = new ValidatedMethod({
 	if (holderId){
 	    Disponibilidad.update(Id, {
 	      $set: {
+			  dStatus: 0,
 			  holder: null,
 			  holderName: null },
 	    });
 	}else{
+
+		dip = Disponibilidad.findOne(Id);
+		ds = getStatus(dip.transdate);
 	    Disponibilidad.update(Id, {
 	      $set: {
+			  dStatus: ds,
 			  holder: Meteor.userId(),
 			  holderName: Meteor.user().emails[0].address },
 	    });
@@ -62,20 +79,24 @@ export const setHolder = new ValidatedMethod({
   }).validator({ clean: true, filter: false }),
   run({ Id,userId,userName}) {
 
-	disponibilidad_nueva = Disponibilidad.find({_id: Id}).fetch()[0]
+	disponibilidad_nueva = Disponibilidad.findOne(Id)
 	disponibilidad_actual = Disponibilidad.find({holder: userId,transdate: disponibilidad_nueva.transdate}).fetch();
 	if (disponibilidad_actual.length>0){
 		for (i=0;i<disponibilidad_actual.length;i++)
 		{
 			Disponibilidad.update(disponibilidad_actual[i]._id, {
 			  $set: {
+				  dStatus: 0,
 				  holder: null,
 				  holderName: null},
 			});
 		};
 	}
+
+	var ds = getStatus(disponibilidad_nueva.transdate)
 	Disponibilidad.update(Id, {
 	  $set: {
+		  dStatus: ds,
 		  holder: userId,
 		  holderName: userName },
 	});
@@ -90,16 +111,45 @@ export const setFree = new ValidatedMethod({
     Id: Disponibilidad.simpleSchema().schema('_id'),
   }).validator({ clean: true, filter: false }),
   run({ Id }) {
-
 	Disponibilidad.update(Id, {
 	  $set: {
+		  dStatus: 0,
 		  holder: null,
 		  holderName: null},
 	});
-
   }
 });
 
+export const setStatus = new ValidatedMethod({
+  name: 'disponibilidad.setStatus',
+  validate: new SimpleSchema({
+    Id: Disponibilidad.simpleSchema().schema('_id'),
+    dS: Disponibilidad.simpleSchema().schema('dStatus'),
+  }).validator({ clean: true, filter: false }),
+  run({ Id,dS }) {
+	disp = Disponibilidad.findOne(Id)
+	if (!dS==0){
+		if (disp.holder==null){
+			return;
+		};
+		h = disp.holder
+		hName = disp.holderName
+	}else{
+    	h = null;
+    	hName = null;
+    };
+	var date = new Date();
+	datestr = moment(date).format("DD/MM/YYYY")
+	if (disp.transdate==datestr || dS==0){
+		Disponibilidad.update(Id, {
+		  $set: {
+			  holder: h,
+			  holderName: hName,
+			  dStatus: dS},
+		});
+	};
+  }
+});
 
 
 
@@ -120,6 +170,7 @@ const DISPONIBILIDAD_METHODS = _.pluck([
   hold,
   setHolder,
   setFree,
+  setStatus,
   remove,
 ], 'name');
 
@@ -133,6 +184,8 @@ if (Meteor.isServer) {
     // Rate limit per connection ID
     connectionId() { return true; },
   }, 5, 1000);
+
+
 }
 
 

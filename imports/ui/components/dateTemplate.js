@@ -38,10 +38,13 @@ Template.dateTemplate.helpers({
 	Meteor.subscribe('cocheras.List');
 	Meteor.subscribe('disponibilidad.List');
 	cocheras = Cocheras.find( {notAvailable: { $ne: true }} ).count();
+	//console.log("cocheras " + cocheras);
+	//console.log(this.valueOf());
 	disp = Disponibilidad.find({
 		holder: { $ne: null},
 		transdate: this.valueOf()}
 		).count();
+	//console.log("disp " + disp);
 
 	return cocheras - disp;
   },

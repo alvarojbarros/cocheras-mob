@@ -54,6 +54,10 @@ Cocheras.schema = new SimpleSchema({
     defaultValue: false,
     optional: true,
   },
+  propType: {
+    type: Number,
+    optional: true,
+  },
 });
 
 Cocheras.attachSchema(Cocheras.schema);
@@ -66,6 +70,7 @@ Cocheras.publicFields = {
   owner: 1,
   ownerName: 1,
   notAvailable: 1,
+  propType: 1,
 };
 
 // TODO This factory has a name - do we have a code style for this?
