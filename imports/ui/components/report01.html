@@ -1,0 +1,63 @@
+<template name="report01">
+  <div class="page report-show">
+    <nav class="js-title-nav">
+      {{#momentum plugin="fade"}}
+        <div class="nav-group">
+          <a href="#" class="js-menu nav-item">
+            <span
+            class="icon-list-unordered"
+            title={{_ 'lists.show.showMenu'}}>
+            </span>
+          </a>
+        </div>
+        <h1 class="title-page">
+          <span class="title-wrapper">Listado de Ocupaci&oacute;n</span>
+          <button class="run-report button-report">Ejecutar</button>
+        </h1>
+
+        <h1 class="sub-title-page">
+          <ul>
+            <li>
+              <span class="title-wrapper">Desde</span>
+              <input id="fromDate" type="date" value="{{currentDate}}"/>
+              <span class="title-wrapper">Hasta</span>
+              <input id="toDate" type="date" value="{{currentDate}}"/>
+            </li>
+            <li>
+              <span class="title-wrapper">Usuario</span>
+              <select class="set-holder" id="setHolder" >
+                {{#each userList}}
+                  <option value={{username}} {{selectedHolder2 holderName}}> {{username}}</option>
+                {{/each}}
+                <option value="" {{selectedHolder holderName}}> - </option>
+              </select>
+              <span class="title-wrapper">Estado</span>
+              <select class="set-status" id="setStatus" >
+                <option value=-1 > Todo </option>
+                <option value=0 > Libre </option>
+                <option value=1 > Reservada </option>
+                <option value=2 > Ocupada </option>
+              </select>
+
+            </li>
+          </ul>
+        </h1>
+
+
+      {{/momentum}}
+
+    </nav>
+
+
+    <div class="content-scrollable list-items">
+    <ul>
+      {{#each reportList}}
+      <li>
+        {{ > report01item }}
+      </li>
+      {{/each}}
+    </ul>
+    </div>
+
+  </div>
+</template>

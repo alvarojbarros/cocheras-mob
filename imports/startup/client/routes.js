@@ -9,9 +9,17 @@ import '../../ui/components/cocherasList.js';
 import '../../ui/components/disponibilidadList.js';
 import '../../ui/components/dateDisponibilidad.js';
 import '../../ui/components/users-show.js';
+import '../../ui/components/report01.js';
 
 // Import to override accounts templates
 import '../../ui/accounts/accounts-templates.js';
+
+FlowRouter.route('/report01', {
+  name: 'Report01.show',
+  action() {
+    BlazeLayout.render('App_body', { main: 'report01' });
+  },
+});
 
 FlowRouter.route('/users', {
   name: 'Users.show',

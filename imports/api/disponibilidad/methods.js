@@ -27,6 +27,9 @@ export const insert = new ValidatedMethod({
     uDate: Disponibilidad.simpleSchema().schema('transdate'),
   }).validator({ clean: true, filter: false }),
   run({ cId,cName,uId,uName,uDate }) {
+    var parts = uDate.split('/');
+	var mydate = new Date(parts[2],parts[1]-1,parts[0]);
+
     const disponibilidad = {
       cochera: cId,
       cocheraName: cName,
@@ -34,6 +37,7 @@ export const insert = new ValidatedMethod({
       holderName: uName,
       transdate: uDate,
       dStatus: 0,
+      date: mydate,
     };
 
     Disponibilidad.insert(disponibilidad);

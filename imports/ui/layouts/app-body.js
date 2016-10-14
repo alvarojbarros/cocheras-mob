@@ -76,6 +76,7 @@ Template.App_body.helpers({
   companyUser(){
     return false;
   },
+
 });
 
 Template.App_body.events({
@@ -111,5 +112,8 @@ Template.App_body.events({
   },
   'click .js-usuarios'() {
     FlowRouter.go('/users');
+  },
+  'click .js-report-1'() {
+    FlowRouter.go('/report01');
   },
 });

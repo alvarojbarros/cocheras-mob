@@ -57,6 +57,10 @@ Disponibilidad.schema = new SimpleSchema({
     type: String,
     max: 12,
   },
+  date: {
+    type: Date,
+    max: 12,
+  },
   dStatus: {
     type: Number,
     optional: true,

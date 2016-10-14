@@ -26,9 +26,6 @@ Template.dateDisponibilidad.helpers({
 
   getCocheras(){
 	mydate = Session.get('DateDisp');
-
-	console.log(mydate);
-
 	Meteor.subscribe('cocheras.List');
 	Meteor.subscribe('disponibilidad.List');
 	cocheras = Cocheras.find( {notAvailable: { $ne: true }} ).fetch();
