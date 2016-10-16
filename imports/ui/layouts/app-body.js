@@ -116,4 +116,7 @@ Template.App_body.events({
   'click .js-report-1'() {
     FlowRouter.go('/report01');
   },
+  'click .js-settings'() {
+    FlowRouter.go('/settings');
+  },
 });

@@ -7,3 +7,15 @@ import { Disponibilidad } from '../disponibilidad.js';
 Meteor.publish('disponibilidad.List', function() {
   return Disponibilidad.find({});
 });
+
+Meteor.publish('aggregate', function(group,query) {
+	var handle = Disponibilidad.aggregate(group,{$filter: query} );
+});
+
+Meteor.methods({
+    "getAggregate" : function(query,group,sortBy) {
+    	disp = Disponibilidad.aggregate({$match: query},group,sortBy );
+    	console.log(disp);
+    	return disp;
+    }
+});

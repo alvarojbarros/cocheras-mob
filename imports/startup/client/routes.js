@@ -10,9 +10,17 @@ import '../../ui/components/disponibilidadList.js';
 import '../../ui/components/dateDisponibilidad.js';
 import '../../ui/components/users-show.js';
 import '../../ui/components/report01.js';
+import '../../ui/components/settings.js';
 
 // Import to override accounts templates
 import '../../ui/accounts/accounts-templates.js';
+
+FlowRouter.route('/settings', {
+  name: 'Settings.show',
+  action() {
+    BlazeLayout.render('App_body', { main: 'settings' });
+  },
+});
 
 FlowRouter.route('/report01', {
   name: 'Report01.show',

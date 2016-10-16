@@ -56,3 +56,5 @@ underscore
 xolvio:cleaner
 zimme:active-route
 momentjs:moment
+meteorhacks:aggregate
+monbro:mongodb-mapreduce-aggregation
