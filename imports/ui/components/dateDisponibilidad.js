@@ -26,21 +26,17 @@ Template.dateDisponibilidad.helpers({
 
   getCocheras(){
 	mydate = Session.get('DateDisp');
-	Meteor.subscribe('cocheras.List');
-	Meteor.subscribe('disponibilidad.List');
-	cocheras = Cocheras.find( {notAvailable: { $ne: true }} ).fetch();
-	//console.log(cocheras.length);
+	query = {notAvailable: { $ne: true }} ;
+	Meteor.subscribe('cocheras.List',query);
+	cocheras = Cocheras.find(query).fetch();
 
 	var array = [];
 	for (i=0;i<cocheras.length;i++){
 
-		//console.log(cocheras[i]._id);
-
-
-		disp = Disponibilidad.find({cochera: cocheras[i]._id, transdate: mydate}).fetch();
-		//console.log(disp.length);
+		query1 = {cochera: cocheras[i]._id, transdate: mydate};
+		Meteor.subscribe('disponibilidad.List',query);
+		disp = Disponibilidad.find(query).fetch();
 		if (disp.length>0){
-			//console.log("encontrado");
 			if (disp[0].holder == null) {
 				array[array.length] = disp[0];
 			}else{
@@ -50,8 +46,6 @@ Template.dateDisponibilidad.helpers({
 			}
 		}else{
 
-			//console.log("insert");
-			//insert.call({cId: cocheras[i]._id, cName: cocheras[i].text, uId: null, uName: null, uDate: mydate}, displayError)
 			insert.call({cId: cocheras[i]._id, cName: cocheras[i].text, uId: null, uName: null, uDate: mydate })
 
 			disp = Disponibilidad.find({cochera: cocheras[i]._id, transdate: mydate}).fetch();
@@ -62,7 +56,6 @@ Template.dateDisponibilidad.helpers({
   },
 
   userAdmin(){
-	//console.log("dateDisponiblidad");
 	return (Meteor.user().emails[0].address=="admin@mail.com" || Meteor.user().emails[0].address=="super@mail.com");
   },
 

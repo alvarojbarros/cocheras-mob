@@ -14,8 +14,9 @@ import {
 
 
 function disponibilidadId(date){
-	Meteor.subscribe('disponibilidad.List');
-	return Disponibilidad.find({holder: Meteor.userId(),transdate: date}).fetch()[0]._id;
+	query = {holder: Meteor.userId(),transdate: date};
+	Meteor.subscribe('disponibilidad.List',query);
+	return Disponibilidad.find(query).fetch()[0]._id;
 };
 
 Template.dateTemplate.events({
@@ -43,16 +44,13 @@ Template.dateTemplate.events({
 Template.dateTemplate.helpers({
 
   getDisponibilidad(){
-	Meteor.subscribe('cocheras.List');
-	Meteor.subscribe('disponibilidad.List');
-	cocheras = Cocheras.find( {notAvailable: { $ne: true }} ).count();
-	//console.log("cocheras " + cocheras);
-	//console.log(this.valueOf());
-	disp = Disponibilidad.find({
-		holder: { $ne: null},
-		transdate: this.valueOf()}
-		).count();
-	//console.log("disp " + disp);
+	query1 = {notAvailable: { $ne: true }} ;
+	Meteor.subscribe('cocheras.List',query1);
+	cocheras = Cocheras.find(query1).count();
+
+	query = {holder: { $ne: null},transdate: this.valueOf()};
+	Meteor.subscribe('disponibilidad.List',query);
+	disp = Disponibilidad.find(query).count();
 
 	return cocheras - disp;
   },
@@ -63,8 +61,9 @@ Template.dateTemplate.helpers({
   },
 
   isHolder(){
-	Meteor.subscribe('disponibilidad.List');
-	disp = Disponibilidad.find({holder: Meteor.userId(),transdate: this.valueOf()}).count();
+	query = {holder: Meteor.userId(),transdate: this.valueOf()};
+	Meteor.subscribe('disponibilidad.List',query);
+	disp = Disponibilidad.find(query).count();
 	if (disp>0) {
 		return true;
 	}else{
@@ -73,19 +72,26 @@ Template.dateTemplate.helpers({
   },
 
   getDisponibilidadHold(){
-	Meteor.subscribe('disponibilidad.List');
-	disp = Disponibilidad.findOne({holder: Meteor.userId(),transdate: this.valueOf()});
-	if (disp.dStatus==1){
-		return disp.cocheraName + "(Resevada)";
-	}else{
-		return disp.cocheraName;
-	}
+	query = {holder: Meteor.userId(),transdate: this.valueOf()};
+	Meteor.subscribe('disponibilidad.List',query);
+	disp = Disponibilidad.findOne(query);
+	return disp.cocheraName;
   },
 
   isReserved(){
-	Meteor.subscribe('disponibilidad.List');
-	disp = Disponibilidad.findOne({holder: Meteor.userId(),transdate: this.valueOf()});
+	query = {holder: Meteor.userId(),transdate: this.valueOf()};
+	Meteor.subscribe('disponibilidad.List',query);
+	disp = Disponibilidad.findOne(query);
 	if (disp.dStatus==1){
+		return true;
+	}
+	return false;
+  },
+
+  isToday(){
+	date = new Date();
+	date0 = date.toLocaleDateString();
+	if (date0==this){
 		return true;
 	}
 	return false;

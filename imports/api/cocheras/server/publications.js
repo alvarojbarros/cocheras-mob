@@ -4,6 +4,6 @@ import { Meteor } from 'meteor/meteor';
 
 import { Cocheras } from '../cocheras.js';
 
-Meteor.publish('cocheras.List', function() {
-  return Cocheras.find({});
+Meteor.publish('cocheras.List', function(query) {
+  return Cocheras.find(query);
 });

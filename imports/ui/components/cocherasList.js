@@ -16,7 +16,7 @@ Template.cocherasList.helpers({
 
 
   cocheras() {
-    Meteor.subscribe('cocheras.List');
+    Meteor.subscribe('cocheras.List',{});
     return Cocheras.find({}, { sort: {text: 1} });
   },
 

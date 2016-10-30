@@ -3,7 +3,7 @@
 .page.report-show {
   .content-scrollable {
     background: @color-empty;
-    top: 7em !important;
+    top: 9em !important;
   }
 
   // Custom nav for lists-show
@@ -29,6 +29,7 @@
         color: @color-ancillary;
         display: inline-block;
         padding: .5em 0 0 0 ;
+        max-width: 25%;
       }
     }
 
@@ -52,14 +53,6 @@
         max-width: 100%;
       }
 
-      .title-wrapper {
-        .ellipsized;
-        color: @color-ancillary;
-        display: inline-block;
-        padding-right: 1.5rem;
-        align: right;
-      }
-
       .span.count-list {
         background: @color-primary;
         border-radius: 1em;
@@ -73,6 +66,24 @@
         vertical-align: middle;
       }
     }
+
+    select {
+      width: 25%;
+      text-align: left;
+    }
+
+    form.js-filters {
+      width: 100%;
+      text-align: left;
+    }
+    form.js-period {
+      width: 100%;
+      text-align: left;
+      input {
+	 width: 40%;
+      }
+    }
+
     form.cochera-new {
       .position(absolute, 3em, 0, auto, 0);
 
@@ -120,4 +131,17 @@
       .options-web {  display: block; }
     }
   }
+  table {
+    border: 1px solid black;
+    width: 100%;
+    padding-left: 3em;
+  }
+  tr {
+    border: 1px solid black;
+  }
+  td {
+    border: 1px solid black;
+    padding-left: .2em;
+  }
+  
 }

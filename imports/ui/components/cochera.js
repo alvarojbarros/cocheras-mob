@@ -31,8 +31,9 @@ Template.cochera.events({
   },
   'change .set-owner': function(event,template) {
 	//users = Meteor.users.find({ "email.address": event.target.value}).fetch();
-	Meteor.subscribe('users.List');
-	users = Meteor.users.find({ emails: { $elemMatch: { address: event.target.value } } }).fetch();
+	query = { emails: { $elemMatch: { address: event.target.value } } };
+	Meteor.subscribe('users.List',query);
+	users = Meteor.users.find(query).fetch();
 	if (users.length==1){
 	    //Meteor.call('cochera.setOwner', this._id,users[0]);
 	    setOwner.call({cocheraId: this._id, userId:users[0]._id, userName:users[0].emails[0].address}, displayError);
@@ -63,7 +64,7 @@ Template.cochera.events({
 Template.cochera.helpers({
 
   userList(){
-	Meteor.subscribe('users.List');
+	Meteor.subscribe('users.List',{});
 	users = Meteor.users.find({}).fetch();
 	for (i=0;i<users.length;i++)
 	{

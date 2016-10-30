@@ -10,8 +10,10 @@
       {{#if isHolder}}
         <span class="date-text"><b>{{getDisponibilidadHold}}</b></span>
         <button class="toggle-free button-class"> Desocupar </button>
-        {{#if isReserved }}
-          <button class="toggle-hold button-class"> Ocupar </button>
+        {{#if isReserved}}
+          {{#if isToday}}
+            <!--button class="toggle-hold button-class"> Ocupar </button-->
+          {{/if}}
         {{/if}}
       {{else}}
         <b><a href="#" class="js-show-date" title="Date" > Disponibles:</a></b>

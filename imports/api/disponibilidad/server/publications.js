@@ -4,8 +4,8 @@ import { Meteor } from 'meteor/meteor';
 
 import { Disponibilidad } from '../disponibilidad.js';
 
-Meteor.publish('disponibilidad.List', function() {
-  return Disponibilidad.find({});
+Meteor.publish('disponibilidad.List', function(query) {
+  return Disponibilidad.find(query);
 });
 
 Meteor.publish('aggregate', function(group,query) {

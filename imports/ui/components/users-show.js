@@ -26,7 +26,7 @@ Template.Users_show.helpers({
 
   userList(){
 	if (Meteor.user().emails[0].address=="super@mail.com"){
-		Meteor.subscribe('users.List');
+		Meteor.subscribe('users.List',{});
 		users = Meteor.users.find({}).fetch();
 		for (i=0;i<users.length;i++)
 		{

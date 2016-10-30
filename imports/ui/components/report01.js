@@ -3,16 +3,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Mongo } from 'meteor/mongo';
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { Tracker } from 'meteor/tracker';
 import { $ } from 'meteor/jquery';
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { TAPi18n } from 'meteor/tap:i18n';
 import { Disponibilidad } from '../../api/disponibilidad/disponibilidad.js';
 import { Settings } from '../../api/settings/settings.js';
 import './report01.html';
-import './report01item.js';
 
 Template.report01.onCreated(function usersShowOnCreated() {
 	Session.set('run', false);
@@ -26,7 +20,6 @@ Template.report01.helpers({
 
 	reportList(){
 		if (Session.get('run')) {
-			Meteor.subscribe('disponibilidad.List');
 
 			let fromDate = $('#fromDate').val();
 			let toDate = $('#toDate').val();
@@ -36,8 +29,9 @@ Template.report01.helpers({
 			td = td.toISOString();
 
 			let usermail = $('#setHolder').val();
-			Meteor.subscribe('users.List');
-			users = Meteor.users.find({ emails: { $elemMatch: { address: usermail } } }).fetch();
+			query = { emails: { $elemMatch: { address: usermail } } };
+			Meteor.subscribe('users.List',query);
+			users = Meteor.users.find(query).fetch();
 
 			let dStatus = $('#setStatus').val();
 
@@ -48,26 +42,21 @@ Template.report01.helpers({
 			//disp = Disponibilidad.find({ date : { $gte : new Date(fd), $lt: new Date(td) } }).fetch();
 
 			let mode = $('#setFunction').val();
+			Meteor.subscribe('disponibilidad.List',query);
 			disp = Disponibilidad.find(query,{sort: {date: 1}} ).fetch();
 			if (mode==0){
+				disp.splice(0,0,{transdate: "Fecha", cocheraName: "Cochera", holderName: "Ocupante"});
 				return disp;
 			}else{
 
 				Meteor.subscribe('settings.List');
 				settings = Settings.findOne({});
 
-				/*group = {$group: {_id : { month: { $month: "$date" }, day: { $dayOfMonth: "$date" }, year: { $year: "$date" } }, num:  { $sum : 1} }};
-				sortBy = {$sort: { _id: -1 }}
-				//const handle = Meteor.subscribe('aggregate',group,query);
-				//disp = handle.ready();
-				Meteor.call('getAggregate',query,group,sortBy,function(error, result) {
-					Session.set('getResults', result);
-				});
-				disp = Session.get('getResults'); */
 				if (mode==1){
 					return [{transdate: "Cantidad", cocheraName: disp.length, holderName: disp.length * settings.CocheraValue}]
 				}else{
-					result = []
+					result = [];
+					result[0] = {transdate: "Fecha", cocheraName: "Cochera", holderName: "Valor"};
 					for (i=0;i<disp.length;i++){
 						found = false;
 						for (j=0;j<result.length;j++){
@@ -95,7 +84,7 @@ Template.report01.helpers({
 	},
 
   userList(){
-	Meteor.subscribe('users.List');
+	Meteor.subscribe('users.List',{});
 	users = Meteor.users.find({}).fetch();
 	for (i=0;i<users.length;i++)
 	{
@@ -120,27 +109,28 @@ Template.report01.helpers({
 Template.report01.events({
 
   'click .run-report'() {
+      Session.set('run', false);
 	  Session.set('run', true);
   },
 
   'input #fromDate': function (event, template) {
-      Session.set("run", false);
+      //Session.set("run", false);
   },
 
   'input #toDate': function (event, template) {
-      Session.set("run", false);
+      //Session.set("run", false);
   },
 
   'input #setHolder': function (event, template) {
-      Session.set("run", false);
+      //Session.set("run", false);
   },
 
   'input #setStatus': function (event, template) {
-      Session.set("run", false);
+      //Session.set("run", false);
   },
 
   'input #setFunction': function (event, template) {
-      Session.set("run", false);
+      //Session.set("run", false);
   },
 
 });

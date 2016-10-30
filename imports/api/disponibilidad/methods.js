@@ -8,7 +8,7 @@ import { Disponibilidad } from './disponibilidad.js';
 
 function getStatus(transdate){
 	var date = new Date();
-	datestr = moment(date).format("DD/MM/YYYY")
+	datestr = date.toLocaleDateString();
 	if (datestr==transdate){
 		ds = 2;
 	}else{
@@ -142,7 +142,7 @@ export const setStatus = new ValidatedMethod({
     	hName = null;
     };
 	var date = new Date();
-	datestr = moment(date).format("DD/MM/YYYY")
+	datestr = date.toLocaleDateString();
 	if (disp.transdate==datestr || dS==0){
 		Disponibilidad.update(Id, {
 		  $set: {

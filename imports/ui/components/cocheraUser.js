@@ -27,7 +27,7 @@ Template.cocheraUser.events({
   'change .set-status': function (event, template) {
 	var stat = Number($(event.currentTarget).val());
 	var date = new Date();
-	datestr = moment(date).format("DD/MM/YYYY")
+	datestr = date.toLocaleDateString()
 	if (stat==0 || datestr==this.transdate) {
 		setStatus.call({Id: this._id, dS: stat}, displayError);
 	}else{
@@ -46,7 +46,8 @@ Template.cocheraUser.helpers({
   },
   isToday(){
 	mydate = Session.get('DateDisp');
-	datestr = moment(new Date()).format("DD/MM/YYYY");
+	date = new Date();
+	datestr = date.toLocaleDateString();
 	if (mydate==datestr) {
 		return true;
 	};
