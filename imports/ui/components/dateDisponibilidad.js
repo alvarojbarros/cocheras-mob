@@ -1,6 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { Cocheras } from '../../api/cocheras/cocheras.js';
 import { Disponibilidad } from '../../api/disponibilidad/disponibilidad.js';
 
@@ -19,19 +16,18 @@ Template.dateDisponibilidad.helpers({
   },
 
   getCocheras(){
-	date = Session.get('DateDisp');
+	mydate = Session.get('DateDisp');
+	/*date = Session.get('DateDisp');
 	Meteor.call('getCocherasDisponibilidad',{mydate: date},function(error, result) {
 		Session.set("CocherasDisp",result);
 	});
-	return Session.get("CocherasDisp");
+	return Session.get("CocherasDisp"); */
 
-	/*query = {notAvailable: { $ne: true }} ;
+	query = {notAvailable: { $ne: true }} ;
 	Meteor.subscribe('cocheras.List',query);
 	cocheras = Cocheras.find(query).fetch();
 	var array = [];
 	for (i=0;i<cocheras.length;i++){
-		console.log(cocheras[i]._id,mydate)
-
 		query1 = {cochera: cocheras[i]._id, transdate: mydate};
 		Meteor.subscribe('disponibilidad.List',query1);
 		disp = Disponibilidad.find(query1).fetch();
@@ -44,15 +40,12 @@ Template.dateDisponibilidad.helpers({
 				}
 			}
 		}else{
-			console.log("Inservar");
-
 			Meteor.call('disponibilidadInsert',{cId: cocheras[i]._id, cName: cocheras[i].text, uId: null, uName: null, uDate: mydate });
-
 			disp = Disponibilidad.find({cochera: cocheras[i]._id, transdate: mydate}).fetch();
 			array[array.length] = disp[0];
 		}
 	}
-	return array; */
+	return array;
   },
 
   userAdmin(){

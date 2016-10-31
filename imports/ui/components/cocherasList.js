@@ -1,6 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { Cocheras } from '../../api/cocheras/cocheras.js';
 import { displayError } from '../lib/errors.js';
 import './cochera.js';

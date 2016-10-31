@@ -1,7 +1,6 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
 import { Cocheras } from '../../api/cocheras/cocheras.js';
 import { Disponibilidad } from '../../api/disponibilidad/disponibilidad.js';
+import { displayError } from '../lib/errors.js';
 import './dateTemplate.html';
 
 
@@ -41,8 +40,11 @@ Template.dateTemplate.helpers({
 	query = {holder: { $ne: null},transdate: this.valueOf()};
 	Meteor.subscribe('disponibilidad.List',query);
 	disp = Disponibilidad.find(query).count();
-
-	return cocheras - disp;
+	res = cocheras - disp;
+	if (res<0) {
+		res = 0;
+	}
+	return res;
   },
 
   userAdmin(){

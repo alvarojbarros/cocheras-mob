@@ -37,7 +37,6 @@ Template.cocheraAdmin.events({
 Template.cocheraAdmin.helpers({
 
   userList(){
-	console.log(11)
 	Meteor.subscribe('users.List',{});
 	users = Meteor.users.find({}).fetch();
 	for (i=0;i<users.length;i++)

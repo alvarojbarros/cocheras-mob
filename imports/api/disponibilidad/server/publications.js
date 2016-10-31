@@ -25,12 +25,14 @@ Meteor.publish('disponibilidad.List', function(query) {
 Meteor.methods({
     "getAggregate" : function(query,group,sortBy) {
     	disp = Disponibilidad.aggregate({$match: query},group,sortBy );
-    	console.log(disp);
     	return disp;
     },
 
     "disponibilidadInsert" : function({cId,cName,uId,uName,uDate}) {
-		insert.call({cId,cName,uId,uName,uDate});
+	  	cnt = Disponibilidad.find({cochera: cId, transdate: uDate}).count();
+	  	if (cnt==0){
+			insert.call({cId,cName,uId,uName,uDate});
+		}
     },
 
     "disponibilidadHold" : function({Id,holderId,dS}) {
