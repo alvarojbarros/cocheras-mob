@@ -4,6 +4,7 @@
       <section id="menu">
         {{#if currentUser}}
           <div class="btns-group-vertical">
+            <img src="logo_qbe.jpg" style="width:215px;height:40px;">
             <a href="#" class="js-user-menu btn-secondary">
               {{#if userMenuOpen}}
                 <span class="icon-arrow-up"></span>
@@ -31,6 +32,7 @@
 
         {{else}}
           <div class="btns-group">
+            <img src="logo_qbe.jpg" style="width:215px;height:45px; padding-bottom: 5px;" >
             <a href="{{pathFor 'signin'}}" class="btn-secondary">{{_ 'Sign In'}}</a>
             <a href="{{pathFor 'join'}}" class="btn-secondary">{{_ 'Join'}}</a>
           </div>
