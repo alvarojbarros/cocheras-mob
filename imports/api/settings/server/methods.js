@@ -4,7 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 
-import { Settings } from './settings.js';
+import { Settings } from '../settings.js';
 
 export const insert = new ValidatedMethod({
   name: 'settings.insert',

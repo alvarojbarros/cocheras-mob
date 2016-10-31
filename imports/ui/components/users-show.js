@@ -14,10 +14,6 @@ import './users-show.html';
 
 import './user-item.js';
 
-import '../../api/users/methods.js';
-
-import { displayError } from '../lib/errors.js';
-
 Template.Users_show.onCreated(function usersShowOnCreated() {
 
 });

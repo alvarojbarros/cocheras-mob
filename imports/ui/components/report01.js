@@ -1,9 +1,5 @@
 /* global confirm */
 
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { Mongo } from 'meteor/mongo';
-import { $ } from 'meteor/jquery';
 import { Disponibilidad } from '../../api/disponibilidad/disponibilidad.js';
 import { Settings } from '../../api/settings/settings.js';
 import './report01.html';

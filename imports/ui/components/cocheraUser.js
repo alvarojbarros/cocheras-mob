@@ -2,25 +2,18 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { displayError } from '../lib/errors.js';
 import { Cocheras } from '../../api/cocheras/cocheras.js';
-import '../../api/cocheras/methods.js';
 
 import './cocheraUser.html';
 
-import {
-  hold,
-  setStatus,
-} from '../../api/disponibilidad/methods.js';
 
 Template.cocheraUser.events({
   'click .toggle-hold'() {
-    //Meteor.call('disponibilidad.hold', this._id, this.holder);
-    hold.call({Id: this._id, holderId: this.holder, dS: 2});
+    Meteor.call('disponibilidadHold', {Id: this._id, holderId: this.holder, dS: 2},function(error, result) {}, displayError);
     FlowRouter.go('Disponibilidad.show');
   },
 
   'click .toggle-reserve'() {
-    //Meteor.call('disponibilidad.hold', this._id, this.holder);
-    hold.call({Id: this._id, holderId: this.holder, dS: 1});
+    Meteor.call('disponibilidadHold', {Id: this._id, holderId: this.holder, dS: 2},function(error, result) {}, displayError);
     FlowRouter.go('Disponibilidad.show');
   },
 
@@ -29,7 +22,8 @@ Template.cocheraUser.events({
 	var date = new Date();
 	datestr = date.toLocaleDateString()
 	if (stat==0 || datestr==this.transdate) {
-		setStatus.call({Id: this._id, dS: stat}, displayError);
+
+	    Meteor.call('disponibilidadSetSatus', {Id: this._id, dS: stat},function(error, result) {}, displayError);
 	}else{
 		const $input = $(event.currentTarget);
 		$input.val(this.dStatus);

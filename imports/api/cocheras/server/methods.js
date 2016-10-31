@@ -4,7 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 
-import { Cocheras } from './cocheras.js';
+import { Cocheras } from '../cocheras.js';
 
 export const insert = new ValidatedMethod({
   name: 'cochera.insert',
@@ -43,7 +43,7 @@ export const setOwner = new ValidatedMethod({
 });
 
 export const setNotOwner = new ValidatedMethod({
-  name: 'cochera.setNotOwner ',
+  name: 'cochera.setNotOwner',
   validate: new SimpleSchema({
     cocheraId: Cocheras.simpleSchema().schema('_id'),
   }).validator({ clean: true, filter: false }),

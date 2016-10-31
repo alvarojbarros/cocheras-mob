@@ -2,15 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Cocheras } from '../../api/cocheras/cocheras.js';
 import { Disponibilidad } from '../../api/disponibilidad/disponibilidad.js';
-
-import '../../api/cocheras/methods.js';
 import './dateTemplate.html';
-
-import {
-  setFree,
-  hold,
-  setStatus,
-} from '../../api/disponibilidad/methods.js';
 
 
 function disponibilidadId(date){
@@ -27,13 +19,11 @@ Template.dateTemplate.events({
   },
 
   'click .toggle-free'(event,template) {
-    setFree.call({ Id: disponibilidadId(this.valueOf())});
+	Meteor.call('disponibilidadSetFree', {Id: disponibilidadId(this.valueOf())},function(error, result) {}, displayError);
   },
 
   'click .toggle-hold'() {
-    //hold.call({Id: disponibilidadId(this.valueOf()), holderId: this.holder, dS: 2});
-    setStatus.call({Id: disponibilidadId(this.valueOf()), dS: 2});
-    //FlowRouter.go('Disponibilidad.show');
+	Meteor.call('disponibilidadSetSatus', {Id: disponibilidadId(this.valueOf()), dS: 2},function(error, result) {}, displayError);
   },
 
 

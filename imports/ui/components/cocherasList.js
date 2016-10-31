@@ -6,12 +6,6 @@ import { displayError } from '../lib/errors.js';
 import './cochera.js';
 import './cocherasList.html';
 
-
-import {
-  insert,
-} from '../../api/cocheras/methods.js';
-
-
 Template.cocherasList.helpers({
 
 
@@ -45,8 +39,7 @@ Template.cocherasList.events({
       return;
     }
 
-    insert.call({
-      text: $input.val(),
+	Meteor.call('cocheraInsert',{text},function(error, result) {
     }, displayError);
 
     $input.val('');

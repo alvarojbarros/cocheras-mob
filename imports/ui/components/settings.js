@@ -6,12 +6,6 @@ import { displayError } from '../lib/errors.js';
 
 import './settings.html';
 
-import {
-  update,
-  insert,
-} from '../../api/settings/methods.js';
-
-
 
 function getSettings() {
     Meteor.subscribe('settings.List');
@@ -49,19 +43,10 @@ Template.settings.events({
 
 	settings = getSettings();
 	if (settings) {
-		update.call({
-		  Id: settings._id,
-		  valor: f,
-		}, displayError);
+		Meteor.call('settingsUpdate', {Id: settings._id,valor: f},function(error, result) {}, displayError);
 	}else{
-		insert.call({
-		  valor: f,
-		}, displayError);
+		Meteor.call('settingsInsert', {valor: f},function(error, result) {}, displayError);
 	};
-
-    /*update.call({
-      text: $input.val(),
-    }, displayError); */
 
   },
 

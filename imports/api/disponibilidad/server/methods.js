@@ -4,7 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 
-import { Disponibilidad } from './disponibilidad.js';
+import { Disponibilidad } from '../disponibilidad.js';
 
 function getStatus(transdate){
 	var date = new Date();

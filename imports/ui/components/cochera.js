@@ -12,50 +12,34 @@ import { Cocheras } from '../../api/cocheras/cocheras.js';
 
 import './cochera.html';
 
-import {
-  remove,
-  setOwner,
-  setNotOwner,
-  setNotAvailable,
-  setAvailable,
-  setPropType,
-} from '../../api/cocheras/methods.js';
-
 
 Template.cochera.events({
   'mousedown .js-delete-item, click .js-delete-item'() {
-
-    remove.call({cocheraId: this._id,}, displayError);
-
-    //Meteor.call('cocheras.remove', this._id);
+	Meteor.call('cocheraRemove',{cocheraId: this._id},function(error, result) {}, displayError);
   },
   'change .set-owner': function(event,template) {
-	//users = Meteor.users.find({ "email.address": event.target.value}).fetch();
 	query = { emails: { $elemMatch: { address: event.target.value } } };
 	Meteor.subscribe('users.List',query);
 	users = Meteor.users.find(query).fetch();
 	if (users.length==1){
-	    //Meteor.call('cochera.setOwner', this._id,users[0]);
-	    setOwner.call({cocheraId: this._id, userId:users[0]._id, userName:users[0].emails[0].address}, displayError);
+		  Meteor.call('cocheraSetOwner',{cocheraId: this._id, userId:users[0]._id, userName:users[0].emails[0].address}
+		  ,function(error, result) {}, displayError);
 	}else{
-	    //Meteor.call('cochera.setNotOwner', this._id);
-	    setNotOwner.call({cocheraId: this._id,}, displayError);
+		  Meteor.call('cocheraSetOwner',{cocheraId: this._id},function(error, result) {}, displayError);
 	}
   },
 
   'change .set-available': function(event,template) {
 	  if (event.target.value) {
-	  	//Meteor.call('cochera.setNotAvailable', this._id);
-	    setNotAvailable.call({cocheraId: this._id,}, displayError);
+		  Meteor.call('cocheraSetNotAvailable',{cocheraId: this._id},function(error, result) {}, displayError);
 	  }else{
-	  	//Meteor.call('cochera.setAvailable', this._id);
-	    setAvailable.call({cocheraId: this._id,}, displayError);
+		  Meteor.call('cocheraSetAvailable',{cocheraId: this._id},function(error, result) {}, displayError);
 	  }
   },
 
   'change .set-propType': function (event, template) {
 	var propType = $(event.currentTarget).val();
-	setPropType.call({cocheraId: this._id,pType: propType}, displayError);
+	Meteor.call('cocheraSetPropType',{cocheraId: this._id,pType: propType},function(error, result) {}, displayError);
   }
 
 

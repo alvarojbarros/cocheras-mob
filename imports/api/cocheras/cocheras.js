@@ -1,7 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Factory } from 'meteor/factory';
-import { TAPi18n } from 'meteor/tap:i18n';
 
 class CocherasCollection extends Mongo.Collection {
   insert(doc, callback) {
@@ -62,9 +60,6 @@ Cocheras.schema = new SimpleSchema({
 
 Cocheras.attachSchema(Cocheras.schema);
 
-// This represents the keys from Lists objects that should be published
-// to the client. If we add secret properties to List objects, don't list
-// them here to keep them private to the server.
 Cocheras.publicFields = {
   text: 1,
   owner: 1,
@@ -72,13 +67,6 @@ Cocheras.publicFields = {
   notAvailable: 1,
   propType: 1,
 };
-
-// TODO This factory has a name - do we have a code style for this?
-//   - usually I've used the singular, sometimes you have more than one though, like
-//   'todo', 'emptyTodo', 'checkedTodo'
-Factory.define('cochera', Cocheras, {
-  text: () => faker.lorem.sentence(),
-});
 
 Cocheras.helpers({
   list() {
