@@ -25,7 +25,7 @@ Template.cocherasList.helpers({
 Template.cocherasList.events({
 
   'click .js-cochera-add'(event, instance) {
-    instance.$('.js-cochera-new input').focus();
+      instance.$('.js-cochera-new input').focus();
   },
 
   'submit .js-cochera-new'(event) {
@@ -35,8 +35,8 @@ Template.cocherasList.events({
     if (!$input.val()) {
       return;
     }
-
-	Meteor.call('cocheraInsert',{text},function(error, result) {
+	val = $input.val();
+	Meteor.call('cocheraInsert',{text: val},function(error, result) {
     }, displayError);
 
     $input.val('');
